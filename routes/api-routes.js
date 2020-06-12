@@ -51,5 +51,21 @@ module.exports = function(app) {
       });
     }
   });
+
+  app.get('/api/users', function(req,res) {
+    db.User.findAll()
+      .then(function(users){
+        return users;
+      })
+      .then(function(users){
+        return res.status(202).json(users)
+      })
+      .catch(function(err) {
+        console.log(err);
+        res.json(err);
+      })
+  })
+
+
 };
 

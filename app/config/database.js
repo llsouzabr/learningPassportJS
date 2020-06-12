@@ -1,8 +1,8 @@
 require('dotenv').config();
 
 const config = {
-    database: process.env.DB_NAME || 'candySphere',
-    host: process.env.DB_HOST || 'localhost',
+    database: process.env.DB_NAME || 'learningJs',
+    host: process.env.DB_HOST || '192.168.15.16',
     port: parseInt(process.env.DB_PORT) || 3306,
     dialect: 'mysql',
     username: process.env.DB_USER,
