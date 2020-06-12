@@ -1,6 +1,8 @@
 //we import passport packages required for authentication
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
+const flash = require('connect-flash');
+const cookieParser = require('cookie-parser');
 //
 //We will need the models folder to check passport agains
 const db = require('../models');

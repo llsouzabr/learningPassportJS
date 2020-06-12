@@ -29,10 +29,15 @@
             <label for="exampleInputPassword1">Password</label>
             <input type="password" class="form-control" id="password-input" placeholder="Password">
           </div>
+          <div class="form-group">
+            <label for="remember_me">Manter logado</label>
+            <input type="checkbox" name="remember_me" value='true' id="remember_me" checked>
+          </div>
           <button type="submit" class="btn btn-default">Login</button>
         </form>
         <br />
-        <p>Or sign up <a href="/signup">here</a></p>
+        <div id="resetPassword"><a href="/resetPassword">Esqueçeu sua senha?</a></div>
+        <div>Ou cadastre-se <a id="signup" href="/signup">aqui!</a></div>
       </div>
     </div>
   </div>

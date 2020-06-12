@@ -9,7 +9,8 @@ $(document).ready(function() {
     event.preventDefault();
     var userData = {
       email: emailInput.val().trim(),
-      password: passwordInput.val().trim()
+      password: passwordInput.val().trim(),
+      remember_me: remember_me
     };
 
     if (!userData.email || !userData.password) {
@@ -26,7 +27,8 @@ $(document).ready(function() {
   function loginUser(email, password) {
     $.post("/api/login", {
       email: email,
-      password: password
+      password: password,
+      remember_me
     }).then(function(data) {
       window.location.replace(data);
       // If there's an error, log the error

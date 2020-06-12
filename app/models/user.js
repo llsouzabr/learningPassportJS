@@ -19,7 +19,12 @@ module.exports = function(sequelize, DataTypes) {
     password: {
       type: DataTypes.STRING,
       allowNull: false
-    }
+    },
+    resetPasswordToken: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    resetPasswordExpires: DataTypes.DATE,
   });
   // Creating a custom method for our User model. 
   //This will check if an unhashed password entered by the 

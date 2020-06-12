@@ -29,6 +29,12 @@ module.exports = function(app) {
     }
     res.sendFile(path.join(__dirname, "../public/login.html"));
   });
+
+  // FOrgot Password
+  app.get("/resetPassword", function(req,res){
+    return res.send('Em construção')
+  })
+
 //
   // Here we've add our isAuthenticated middleware to this route.
   // If a user who is not logged in tries to access this route they will be 

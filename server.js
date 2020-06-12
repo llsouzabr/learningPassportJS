@@ -1,12 +1,19 @@
 // Requiring necessary npm middleware packages 
+const createError = require('http-errors');
 const env = require('dotenv').config();
 const express = require("express");
+const logger = require("morgan");
+const nodemailer = require('nodemailer');
 const bodyParser = require("body-parser");
 const session = require("express-session");
-// Requiring passport as we've configured it
 const passport = require("./app/config/passport");
-
 const db = require("./app/models");
+// const flash = require('connect-flash');
+const cookieParser = require('cookie-parser');
+const crypto = require('crypto');
+const flash = require('express-flash');
+
+
 
 
 // Setting up port
@@ -14,14 +21,21 @@ const PORT = process.env.PORT || 8080;
 // Creating express app and configuring middleware 
 //needed to read through our public folder
 const app = express();
+app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false })); //For body parser
 app.use(bodyParser.json());
 app.use(express.static("public"));
-
+app.use(cookieParser());
 // We need to use sessions to keep track of our user's login status
 app.use(session({ secret: "keyboard cat", resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(cookieParser('keyboard cat'));
+// app.use(session({ cookie: { maxAge: 60000 }}));
+
+app.use(flash());
+
+
 //
 // Requiring our routes
 require("./routes/html-routes")(app);
