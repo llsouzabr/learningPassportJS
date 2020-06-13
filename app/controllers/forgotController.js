@@ -37,7 +37,7 @@ const forgotController = function(req,res,next) {
                         user.resetPasswordToken = token;
                         user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
                         user.save
-                            done(null,token, user);
+                            done(null,token, user, msgReturn);
                         }
                     });
 
@@ -57,8 +57,8 @@ const forgotController = function(req,res,next) {
             //   });
             // });
           },
-          function(token, user, done) {
-            console.log('Envio Email')
+          function(token, user, msg, done) {
+            console.log('Envio Email para ' +user.email )
             let mailOptions = {
               to: user.email,
               from:`${process.env.EMAIL_USER}`,
@@ -68,6 +68,7 @@ const forgotController = function(req,res,next) {
                 'http://' + req.headers.host + '/reset/' + token + '\n\n' +
                 'If you did not request this, please ignore this email and your password will remain unchanged.\n'
             };
+            const msgReturn = 'An e-mail has been sent to ' + user.email + ' with further instructions.'
             Email.sendMail(mailOptions, function(err) {
                 if(err){
                     console.log('Não foi possivel mandar o email: ' + err );
