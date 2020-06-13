@@ -24,11 +24,15 @@ const forgotController = function(req,res,next) {
           },
           function(token, done) {
               console.log('step2',token)
+              const { email } = req.body;
+              const msgReturn = 'An e-mail has been sent to ' + email + ' with further instructions.'
               db.User.findOne(
-                { where: {email: req.body.email}}).then(function(user){
+                { where: {email: email}}).then(function(user){
                     if(!user){
-                        req.flash('error', 'No account with that email address exists.');
-                        return res.status(201).send('Email não encontrado, segue a vida',token);
+                        // req.flash('error', 'No account with that email address exists.');
+                        // return res.status(400).send('Email não encontrado, segue a vida '+ token);
+                        req.flash('info', 'An e-mail has been sent to ' + email + ' with further instructions.');
+                        return res.status(200).send(msgReturn);
                     } else {
                         user.resetPasswordToken = token;
                         user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
@@ -65,8 +69,15 @@ const forgotController = function(req,res,next) {
                 'If you did not request this, please ignore this email and your password will remain unchanged.\n'
             };
             Email.sendMail(mailOptions, function(err) {
-              req.flash('info', 'An e-mail has been sent to ' + user.email + ' with further instructions.');
-              done(err, 'done');
+                if(err){
+                    console.log('Não foi possivel mandar o email: ' + err );
+                    return res.status(500).send('Não foi possivel mandar o email: ' + err )
+                } else {
+                    req.flash('info',msgReturn)
+                    done(err, 'done');
+                }
+            //   req.flash('info', 'An e-mail has been sent to ' + email + ' with further instructions.');
+
             });
           }
         ], function(err) {
