@@ -74,7 +74,8 @@ const forgotController = function(req,res,next) {
                     return res.status(500).send('Não foi possivel mandar o email: ' + err )
                 } else {
                     req.flash('info',msgReturn)
-                    done(err, 'done');
+                    // done(err, 'done');
+                    return res.status(200).send(msgReturn); 
                 }
             //   req.flash('info', 'An e-mail has been sent to ' + email + ' with further instructions.');
 
